@@ -19,12 +19,12 @@
             <?php
             require "functions.php";
 
-            if (isset ($_SESSION['admin'])) {
+            if (isset($_SESSION['admin'])) {
                 header('Location: ./home.php');
                 exit();
             }
 
-            if (isset ($_POST['register'])) {
+            if (isset($_POST['register'])) {
                 $response = register($_POST['admin_user'], $_POST['admin_pass'], $_POST['name'], $_POST['email'], $_POST['username'], $_POST['password'], $_POST['confirm-password']);
 
                 if (@$response == "success") {

@@ -41,13 +41,18 @@
     $card = $_POST['card'];
     $ecd = $_POST['ecd'];
     $fee = $_POST['fee'];
-    $appointment = $_POST['appointment'];
+    $appointment = $_POST['appointdate'];
+    $appointment = $_POST['appointtime'];
 
     if (isset($_POST['enroll'])) {
         $response = enrollment($name, $age, $bday, $address, $contact, $email, $level, $school, $sy, $referral, $pic, $psa, $goodmoral, $card, $ecd, $fee, $appointdate, $appointtime);
 
+        if ($response == "success") {
+            echo "<script>alert('Enrollment Successful!')</script>";
+        } else {
+            echo "<script>alert('" . $response . "')</script>";
+        }
     }
-
     ?>
 
     <main>
@@ -56,29 +61,33 @@
 
         <div class="form-container">
             <div class="form-flex">
-                <form action="" autocomplete="false">
+                <form action="" method="POST" autocomplete="false">
                     <h1 class="h1">STUDENT'S INFORMATION</h1>
                     <div class="block">
                         <label for="name">NAME:</label>
-                        <input type="text" name="name" id="name"
-                            placeholder="Format: Surname, First Name Middle Name"><br>
+                        <input type="text" name="name" id="name" placeholder="Format: Surname, First Name Middle Name"
+                            value="<?php echo @$_POST['name']; ?>"><br>
 
                         <label for="age">AGE:</label>
-                        <input type="number" name="age" id="age" placeholder="Age"><br>
+                        <input type="number" name="age" id="age" placeholder="Age"
+                            value="<?php echo @$_POST['age']; ?>"><br>
                     </div>
                     <div class="block">
                         <label for="bday">BIRTHDAY:</label>
-                        <input type="date" name="bday" id="bday"><br>
+                        <input type="date" name="bday" id="bday" value="<?php echo @$_POST['bday']; ?>"><br>
 
                         <label for="address">ADDRESS</label>
-                        <input type="text" name="address" id="address" placeholder="Home Address"><br>
+                        <input type="text" name="address" id="address" placeholder="Home Address"
+                            value="<?php echo @$_POST['address']; ?>"><br>
                     </div>
                     <div class="block">
                         <label for="contact">CONTACT NUMBER</label>
-                        <input type="number" name="contact" id="contact" placeholder="Contact Number">
+                        <input type="number" name="contact" id="contact" placeholder="Contact Number"
+                            value="<?php echo @$_POST['contact']; ?>">
 
                         <label for="email">EMAIL</label>
-                        <input type="email" name="email" id="email" placeholder="E-Mail">
+                        <input type="email" name="email" id="email" placeholder="E-Mail"
+                            value="<?php echo @$_POST['email']; ?>">
                     </div><br>
 
                     <H1 class="h1">ACADEMIC INFORMATION</H1>
@@ -104,16 +113,19 @@
                         </select>
 
                         <label for="school">SCHOOL NAME <br>(If Transfer)</label>
-                        <input type="text" name="school" id="school" placeholder="School Name (If transferee)">
+                        <input type="text" name="school" id="school" placeholder="School Name (If transferee)"
+                            value="<?php echo @$_POST['school']; ?>">
 
 
                     </div>
 
                     <div class="block">
                         <label for="sy">SCHOOL YEAR <br>(If Transfer)</label>
-                        <input type="number" name="sy" id="sy" placeholder="eg. 2020-2021">
+                        <input type="number" name="sy" id="sy" placeholder="eg. 2020-2021"
+                            value="<?php echo @$_POST['sy']; ?>">
                         <label for="referral">REFERRAL NAME</label>
-                        <input type="text" name="referral" id="referral" placeholder="Referral Name">
+                        <input type="text" name="referral" id="referral" placeholder="Referral Name"
+                            value="<?php echo @$_POST['referral']; ?>">
                     </div><BR></BR>
 
                     <h1 class="h1">REQUIREMENTS</h1>
@@ -152,18 +164,20 @@
 
                     <h1 class="h1">APPOINTMENT CALENDAR</h1><br>
                     <div class="calendar">
-
                         <div class="date">
                             <label for="appointdate">DATE</label><br>
                             <input type="text" name="appointdate" id="appointdate" class="datepicker"
-                                placeholder="Appointment Date">
+                                value="<?php echo @$_POST['appointdate']; ?>">
                         </div>
 
                         <div class="time">
                             <label for="appointtime">TIME</label><br>
                             <select name="appointtime" id="appointtime">
                                 <option value="" selected hidden>Choose Appointment Time</option>
-
+                                <option value="8:00 AM - 9:30 AM">8:00 AM - 9:30 AM</option>
+                                <option value="1:00 PM - 2:30 PM">10:00 PM - 11:30 PM</option>
+                                <option value="1:00 PM - 2:30 PM">1:00 PM - 2:30 PM</option>
+                                <option value="3:00 PM - 4:30 PM">3:00 PM - 4:30 PM</option>
                             </select>
                         </div>
                     </div>
@@ -178,19 +192,18 @@
 
     <?php include 'footer.php'; ?>
 </body>
-
 <script>
     //DATE PICKER
     var dd = new Date().getDate();
     var mm = new Date().getMonth();
     var yyyy = new Date().getFullYear();
     // var tommorrow = new Date().getDate() + 1;
-    
+
     <?php
     $getholidays = getholidays();
     echo "var holiday = [\n\t" . $getholidays . "\n];";
     ?>
-    
+
     $('.datepicker').datepicker({
         // Current date 
         minDate: new Date(yyyy, mm, dd + 1),

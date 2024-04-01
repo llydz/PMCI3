@@ -509,7 +509,7 @@ function holidaytable()
 	}
 
 	// Fetch holiday data from the database
-	$sql = "SELECT holiday_name, holiday_date FROM holiday";
+	$sql = "SELECT holiday_name, holiday_date FROM holiday ORDER BY holiday_date ASC";
 	$result = $mysqli->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -589,7 +589,8 @@ function addholiday()
 	}
 
 	// Prepare and execute SQL statement to insert a new empty holiday record
-	$stmt = $mysqli->prepare("INSERT INTO holiday (holiday_name, holiday_date) VALUES (?, ?)");
+
+	$stmt = $mysqli->prepare("INSERT INTO holiday (id, holiday_name, holiday_date) SELECT MAX(id)+1, ?, ? FROM holiday");
 	$defaultHolidayName = ""; // You can set default values for holiday name and date here
 	$defaultHolidayDate = date("Y-m-d"); // Default date as today's date
 	$stmt->bind_param("ss", $defaultHolidayName, $defaultHolidayDate);
@@ -656,30 +657,6 @@ function loadDefaultData()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function getholidays()
 {
 	$mysqli = connect();
@@ -720,6 +697,9 @@ function getholidays()
 }
 
 
+
+
+
 function enrollment(
 	$name,
 	$age,
@@ -740,53 +720,25 @@ function enrollment(
 	$appointdate,
 	$appointtime
 ) {
-
-	// $name
-// $age
-// $bday
-// $address
-// $contact
-// $email
-// $level
-// $school
-// $schoolyear
-// $referral
-// $pic
-// $psa
-// $goodmoral
-// $card
-// $ecd
-// $fee
-// $appointment
-
 	$mysqli = connect();
 	if ($mysqli === false) {
 		return false;
 	}
 
-	$name = trim($name);
-	$age = trim($age);
-	$bday = trim($bday);
-	$address = trim($address);
-	$contact = trim($contact);
-	$email = trim($email);
-	$level = trim($level);
-	$school = trim($school);
-	$sy = trim($sy);
-	$referral = trim($referral);
 
-	$pic = isset($_POST['picture']) ? 1 : 0;
-	$psa = isset($_POST['psa']) ? 1 : 0;
-	$goodmoral = isset($_POST['goodmoral']) ? 1 : 0;
-	$card = isset($_POST['card']) ? 1 : 0;
-	$ecd = isset($_POST['ecd']) ? 1 : 0;
-	$fee = isset($_POST['fee']) ? 1 : 0;
+	$stmt = $mysqli->prepare("INSERT INTO enrollment (name, age, bday, address, contact, email, level, school, sy, referral, pic, psa, good_moral, card, ecd, fee, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	if ($stmt === false) {
+		return "Error preparing statement: " . $mysqli->error;
+	}
 
+	$stmt->bind_param("ssssssssssssssss", $name, $age, $bday, $address, $contact, $email, $level, $school, $sy, $referral, $pic, $psa, $goodmoral, $card, $ecd, $fee, $appointdate, $appointtime);
+	$stmt->execute();
+	$success = $stmt->affected_rows == 1 ? "success" : "An error occurred. Please try again";
+	$stmt->close();
 
-
-	$appointdate = trim($appointdate);
-	$appointtime = trim($appointtime);
+	return $success;
 }
+
 
 
 function logout()
