@@ -12,20 +12,15 @@ include 'header.php';
 
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['add'])) {
-        addholiday();
+if (isset($_POST['add'])) {
+    addholiday();
+} elseif (isset($_POST['save'])) {
+    saveholidays();
+} elseif (isset($_POST['load'])) {
+    loadDefaultData();
+} elseif (isset($_POST['delete'])) {
 
-    } elseif (isset($_POST['save'])) {
-        saveholidays();
-    } elseif (isset($_POST['load'])) {
-        loadDefaultData();
-    } elseif (isset($_POST['delete'])) {
-
-    }
 }
-
-
 
 
 ?>
@@ -50,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form action="" method="POST">
                     <div class="buttonz">
                         <input style="background-color: rgb(47, 47, 228)" type="submit" name="add" id="add" value="Add">
-                        <input type="submit" name="save" id="save" value="Save">
+                        <input type="submit" name="save" id="save" value="Save" onclick="return save()">
                         <input style="background-color: rgb(148, 148, 0)" type="submit" name="load" id="load"
-                            value="Load Default">
+                            value="Load Default" onclick="return load()">
                     </div>
                     <div class="table">
                         <table>
@@ -73,5 +68,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </main>
 
 </body>
+<script>
+    function save() {
+        var response = confirm('Are you sure you want to save?');
+        if (response) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function load() {
+        var response = confirm('Are you sure you want to log out?');
+        if (response) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function delete () {
+        var response = confirm('Are you sure you want to log out?');
+        if (response) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>
 
 </html>

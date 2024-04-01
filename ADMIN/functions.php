@@ -566,7 +566,7 @@ function saveholidays()
 		// Optionally, you can redirect the user or display a success message
 		// header("Location: holiday.php");
 		// exit;
-		echo "Holiday data saved successfully!";
+		echo "<script>alert('Holiday Updated successfully!')</script>";
 	} catch (Exception $e) {
 		// Rollback the transaction if any update fails
 		$mysqli->rollback();
@@ -595,11 +595,7 @@ function addholiday()
 	$stmt->bind_param("ss", $defaultHolidayName, $defaultHolidayDate);
 
 	if ($stmt->execute()) {
-		// Redirect the user or display a success message
-		// header("Location: holiday.php");
-		// exit;
 	} else {
-		// Handle the error (e.g., display an error message)
 		echo "Error adding holiday: " . $mysqli->error;
 	}
 
@@ -647,7 +643,7 @@ function loadDefaultData()
 		// Redirect the user or display a success message
 		// header("Location: holiday.php");
 		// exit;
-		echo "Default holiday data loaded successfully!";
+		echo "<script>alert('Default holiday loaded successfully!')</script>";
 	} catch (Exception $e) {
 		// Rollback the transaction if any operation fails
 		$mysqli->rollback();
@@ -790,4 +786,12 @@ function enrollment(
 
 	$appointdate = trim($appointdate);
 	$appointtime = trim($appointtime);
+}
+
+
+function logout()
+{
+	session_destroy();
+	header('Location: ./index.php');
+	exit();
 }

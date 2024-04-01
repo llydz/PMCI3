@@ -16,22 +16,22 @@
     <?php
     require 'functions.php';
 
-    if (isset ($_POST['profile'])) {
+    if (isset($_POST['profile'])) {
         header('Location: ./profile.php');
         exit();
     }
 
-    if (isset ($_POST['news'])) {
+    if (isset($_POST['news'])) {
         header('Location: ./home.php');
         exit();
     }
 
-    if (isset ($_POST['enrollment'])) {
+    if (isset($_POST['enrollment'])) {
         header('Location: ./enrollment.php');
         exit();
     }
 
-    if (isset ($_POST['logout'])) {
+    if (isset($_POST['logout'])) {
         logout();
         exit();
     }
