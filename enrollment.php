@@ -185,12 +185,12 @@
     var mm = new Date().getMonth();
     var yyyy = new Date().getFullYear();
     // var tommorrow = new Date().getDate() + 1;
-
+    
     <?php
     $getholidays = getholidays();
     echo "var holiday = [\n\t" . $getholidays . "\n];";
     ?>
-
+    
     $('.datepicker').datepicker({
         // Current date 
         minDate: new Date(yyyy, mm, dd + 1),

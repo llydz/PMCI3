@@ -7,7 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CALENDAR EDITOR</title>
 </head>
-<?php include 'header.php'; ?>
+<?php
+include 'header.php';
+
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['add'])) {
+        addholiday();
+
+    } elseif (isset($_POST['save'])) {
+        saveholidays();
+    } elseif (isset($_POST['load'])) {
+        loadDefaultData();
+    } elseif (isset($_POST['delete'])) {
+
+    }
+}
+
+
+
+
+?>
 
 <body>
 
@@ -26,25 +47,28 @@
                 <div class="TAAS">
                     <h1>HOLIDAY EDITOR</h1>
                 </div>
-                <div class="buttonz">
-                    <input style="background-color: rgb(47, 47, 228)" type="submit" name="" id="" value="Add">
-                    <input type="submit" name="" id="" value="Save">
-                    <input style="background-color: rgb(148, 148, 0)" type="submit" name="" id="" value="Load Default">
-                </div>
-                <div class="table">
-                    <table>
-                        <tr>
-                            <th>HOLIDAY</th>
-                            <th>DATE</th>
-                            <th></th>
-                        </tr>
-                        <?php
-                        echo holidaytable(); // Echo the function call to populate the form
-                        ?>
-
-                    </table>
-                </div>
+                <form action="" method="POST">
+                    <div class="buttonz">
+                        <input style="background-color: rgb(47, 47, 228)" type="submit" name="add" id="add" value="Add">
+                        <input type="submit" name="save" id="save" value="Save">
+                        <input style="background-color: rgb(148, 148, 0)" type="submit" name="load" id="load"
+                            value="Load Default">
+                    </div>
+                    <div class="table">
+                        <table>
+                            <tr>
+                                <th>HOLIDAY</th>
+                                <th>DATE</th>
+                                <th></th>
+                            </tr>
+                            <?php
+                            echo holidaytable(); // Echo the function call to populate the form
+                            ?>
+                </form>
+                </table>
             </div>
+
+        </div>
         </div>
     </main>
 

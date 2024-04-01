@@ -500,6 +500,7 @@ function accountinfo()
 	return false;
 }
 
+// For holiday table
 function holidaytable()
 {
 	$mysqli = connect();
@@ -518,9 +519,9 @@ function holidaytable()
 
 			// Output holiday name and date in the text boxes
 			echo '<tr>';
-			echo '<td><input type="text" class="textbox" value="' . $holidayName . '"></td>';
-			echo '<td><input type="date" class="textbox1" value="' . $holidayDate . '"></td>';
-			echo '<td><input type="button" class="del" name="" id="" value="delete"></td>';
+			echo '<td><input type="text" class="textbox" name="holiday_name[]" autocomplete="off" value="' . $holidayName . '"></td>';
+			echo '<td><input type="date" class="textbox1" name="holiday_date[]" autocomplete="off" value="' . $holidayDate . '"></td>';
+			echo '<td><input type="submit" class="del" name="delete" autocomplete="off" value="Delete"></td>';
 			echo '</tr>';
 		}
 	} else {
@@ -530,6 +531,158 @@ function holidaytable()
 	}
 	$mysqli->close();
 }
+
+
+function saveholidays()
+{
+	$mysqli = connect();
+	if ($mysqli === false) {
+		return false;
+	}
+
+	// Start a transaction for atomicity
+	$mysqli->begin_transaction();
+
+	try {
+		// Iterate through posted data for holiday names and dates
+		$holidayNames = $_POST['holiday_name'];
+		$holidayDates = $_POST['holiday_date'];
+
+		// Prepare and execute SQL statements to update each holiday record
+		$stmt = $mysqli->prepare("UPDATE holiday SET holiday_name = ?, holiday_date = ? WHERE id = ?");
+		$stmt->bind_param("ssi", $holidayName, $holidayDate, $holidayId);
+
+		foreach ($holidayNames as $key => $holidayName) {
+			$holidayDate = $holidayDates[$key];
+			$holidayId = $key + 1; // Assuming holiday IDs start from 1 and are sequential
+
+			// Execute the update statement for each holiday record
+			$stmt->execute();
+		}
+
+		// Commit the transaction if all updates succeed
+		$mysqli->commit();
+
+		// Optionally, you can redirect the user or display a success message
+		// header("Location: holiday.php");
+		// exit;
+		echo "Holiday data saved successfully!";
+	} catch (Exception $e) {
+		// Rollback the transaction if any update fails
+		$mysqli->rollback();
+
+		// Handle the error (e.g., display an error message)
+		echo "Error: " . $e->getMessage();
+	}
+
+	$stmt->close();
+	$mysqli->close();
+}
+
+
+// Function to add a new holiday to the database
+function addholiday()
+{
+	$mysqli = connect();
+	if ($mysqli === false) {
+		return false;
+	}
+
+	// Prepare and execute SQL statement to insert a new empty holiday record
+	$stmt = $mysqli->prepare("INSERT INTO holiday (holiday_name, holiday_date) VALUES (?, ?)");
+	$defaultHolidayName = ""; // You can set default values for holiday name and date here
+	$defaultHolidayDate = date("Y-m-d"); // Default date as today's date
+	$stmt->bind_param("ss", $defaultHolidayName, $defaultHolidayDate);
+
+	if ($stmt->execute()) {
+		// Redirect the user or display a success message
+		// header("Location: holiday.php");
+		// exit;
+	} else {
+		// Handle the error (e.g., display an error message)
+		echo "Error adding holiday: " . $mysqli->error;
+	}
+
+	$stmt->close();
+	$mysqli->close();
+}
+
+function loadDefaultData()
+{
+	$mysqli = connect();
+	if ($mysqli === false) {
+		return false;
+	}
+	$currentYear = date("Y");
+	// Start a transaction for atomicity
+	$mysqli->begin_transaction();
+
+	try {
+		// Delete existing holiday data
+		$mysqli->query("DELETE FROM holiday");
+
+		// Define the SQL query to insert default holiday data
+		$sql = "INSERT INTO holiday (id, holiday_name, holiday_date) VALUES
+		(1, 'New Year\'s Day', '$currentYear-01-01'),
+		(2, 'EDSA Revolution Anniversary', '$currentYear-02-25'),
+		(3, 'Araw ng Kagitingan', '$currentYear-04-08'),
+		(4, 'Labor Day', '$currentYear-05-01'),
+		(5, 'Araw ng Kalayaan', '$currentYear-06-12'),
+		(6, 'Ninoy Aquino Day', '$currentYear-08-21'),
+		(7, 'All Saints\' Day', '$currentYear-11-01'),
+		(8, 'All Souls Day', '$currentYear-11-02'),
+		(9, 'Bonifacio Day', '$currentYear-11-30'),
+		(10, 'Feast of the Immaculate Conception of the Blessed Virgin Mary', '$currentYear-12-8'),
+		(11, 'Christmas Eve', '$currentYear-12-24'),
+		(12, 'Christmas Day', '$currentYear-12-25'),
+		(13, 'Rizal Day', '$currentYear-12-30'),
+		(14, 'New Year\'s Eve', '$currentYear-12-31')"; // Add more default data as needed
+
+		// Execute the SQL query to insert default data
+		$mysqli->query($sql);
+
+		// Commit the transaction if all operations succeed
+		$mysqli->commit();
+
+		// Redirect the user or display a success message
+		// header("Location: holiday.php");
+		// exit;
+		echo "Default holiday data loaded successfully!";
+	} catch (Exception $e) {
+		// Rollback the transaction if any operation fails
+		$mysqli->rollback();
+
+		// Handle the error (e.g., display an error message)
+		echo "Error loading default holiday data: " . $e->getMessage();
+	}
+
+	$mysqli->close();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function getholidays()
 {
