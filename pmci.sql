@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 22, 2024 at 03:38 PM
+-- Generation Time: Apr 01, 2024 at 04:49 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -91,7 +91,15 @@ CREATE TABLE IF NOT EXISTS `holiday` (
   `holiday_name` varchar(255) NOT NULL,
   `holiday_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `holiday`
+--
+
+INSERT INTO `holiday` (`id`, `holiday_name`, `holiday_date`) VALUES
+(1, 'New Year', '2024-01-01'),
+(2, 'Test', '2024-04-10');
 
 -- --------------------------------------------------------
 

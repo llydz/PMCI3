@@ -155,7 +155,8 @@
 
                         <div class="date">
                             <label for="appointdate">DATE</label><br>
-                            <input type="text" name="appointdate" id="appointdate" class="datepicker" placeholder="Appointment Date">
+                            <input type="text" name="appointdate" id="appointdate" class="datepicker"
+                                placeholder="Appointment Date">
                         </div>
 
                         <div class="time">
