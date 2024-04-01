@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 01, 2024 at 04:49 AM
+-- Generation Time: Apr 01, 2024 at 07:24 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -58,7 +58,7 @@ INSERT INTO `account` (`id`, `username`, `password`, `email`, `name`) VALUES
 
 DROP TABLE IF EXISTS `enrollment`;
 CREATE TABLE IF NOT EXISTS `enrollment` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `age` int NOT NULL,
   `bday` date NOT NULL,
@@ -66,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   `contact` int NOT NULL,
   `email` varchar(255) NOT NULL,
   `level` varchar(255) NOT NULL,
-  `transfer_school` varchar(255) NOT NULL,
-  `transfer_sy` varchar(255) NOT NULL,
+  `school` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `referral` varchar(155) NOT NULL,
   `pic` int NOT NULL,
   `psa` int NOT NULL,
@@ -76,8 +76,17 @@ CREATE TABLE IF NOT EXISTS `enrollment` (
   `ecd` int NOT NULL,
   `fee` int NOT NULL,
   `date` date NOT NULL,
-  `time` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `time` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `enrollment`
+--
+
+INSERT INTO `enrollment` (`id`, `name`, `age`, `bday`, `address`, `contact`, `email`, `level`, `school`, `sy`, `referral`, `pic`, `psa`, `good_moral`, `card`, `ecd`, `fee`, `date`, `time`) VALUES
+(1, '1', 1, '0000-00-00', '1', 1, '1', '1', '1', '1', '1', 1, 1, 1, 1, 1, 1, '0000-00-00', '1'),
+(2, '1', 1, '0000-00-00', '1', 1, '1', '1', '1', '1', '1', 1, 1, 1, 1, 1, 1, '0000-00-00', '1');
 
 -- --------------------------------------------------------
 
@@ -91,15 +100,27 @@ CREATE TABLE IF NOT EXISTS `holiday` (
   `holiday_name` varchar(255) NOT NULL,
   `holiday_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `holiday`
 --
 
 INSERT INTO `holiday` (`id`, `holiday_name`, `holiday_date`) VALUES
-(1, 'New Year', '2024-01-01'),
-(2, 'Test', '2024-04-10');
+(1, 'New Year\'s Day', '2024-01-01'),
+(2, 'EDSA Revolution Anniversary', '2024-02-25'),
+(3, 'Araw ng Kagitingan', '2024-04-08'),
+(4, 'Labor Day', '2024-05-01'),
+(5, 'Araw ng Kalayaan', '2024-06-12'),
+(6, 'Ninoy Aquino Day', '2024-08-21'),
+(7, 'All Saints\' Day', '2024-11-01'),
+(8, 'All Souls Day', '2024-11-02'),
+(9, 'Bonifacio Day', '2024-11-30'),
+(10, 'Feast of the Immaculate Conception of the Blessed Virgin Mary', '2024-12-08'),
+(11, 'Christmas Eve', '2024-12-24'),
+(12, 'Christmas Day', '2024-12-25'),
+(13, 'Rizal Day', '2024-12-30'),
+(14, 'New Year\'s Eve', '2024-12-31');
 
 -- --------------------------------------------------------
 
