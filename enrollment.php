@@ -172,7 +172,7 @@
 
                         <div class="time">
                             <label for="appointtime">TIME</label><br>
-                            <select name="appointtime" id="appointtime">
+                            <select name="appointtime" id="appointtime" required>
                                 <option value="" selected hidden>Choose Appointment Time</option>
                                 <option value="8:00 AM - 9:30 AM">8:00 AM - 9:30 AM</option>
                                 <option value="1:00 PM - 2:30 PM">10:00 PM - 11:30 PM</option>

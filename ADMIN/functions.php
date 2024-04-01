@@ -726,12 +726,12 @@ function enrollment(
 	}
 
 
-	$stmt = $mysqli->prepare("INSERT INTO enrollment (name, age, bday, address, contact, email, level, school, sy, referral, pic, psa, good_moral, card, ecd, fee, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	$stmt = $mysqli->prepare("INSERT INTO `enrollment` ( `name`, `age`, `bday`, `address`, `contact`, `email`, `level`, `school`, `sy`, `referral`, `pic`, `psa`, `good_moral`, `card`, `ecd`, `fee`, `date`, `time`) VALUES ( ?, '?, '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '?);");
 	if ($stmt === false) {
 		return "Error preparing statement: " . $mysqli->error;
 	}
 
-	$stmt->bind_param("ssssssssssssssss", $name, $age, $bday, $address, $contact, $email, $level, $school, $sy, $referral, $pic, $psa, $goodmoral, $card, $ecd, $fee, $appointdate, $appointtime);
+	$stmt->bind_param("ssssssssssssssssss", $name, $age, $bday, $address, $contact, $email, $level, $school, $sy, $referral, $pic, $psa, $goodmoral, $card, $ecd, $fee, $appointdate, $appointtime);
 	$stmt->execute();
 	$success = $stmt->affected_rows == 1 ? "success" : "An error occurred. Please try again";
 	$stmt->close();
